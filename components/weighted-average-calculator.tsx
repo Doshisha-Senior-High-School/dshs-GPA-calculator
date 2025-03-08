@@ -362,7 +362,7 @@ export default function WeightedAverageCalculator() {
   return (
     <div className="container px-4 py-6 mx-auto max-w-3xl">
       <header className="text-center mb-8">
-        <h1 className="text-3xl font-normal text-[#606] flex items-center justify-center gap-2">
+        <h1 className="text-3xl font-semibold text-[#606] flex items-center justify-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 161.7498 140.07944" className="h-8 w-8">
             <g>
               <polygon style={{ fill: "#606" }} points="80.8749 70.03972 121.31235 0 40.43745 0 80.8749 70.03972" />
@@ -393,7 +393,7 @@ export default function WeightedAverageCalculator() {
           {tabs.map((tab) => (
             <TabsContent key={tab.id} value={tab.id}>
               <div className="space-y-8">
-                <div className="shadow-2xl p-4 rounded-xl bg-white">
+                <div className="shadow-lg p-4 rounded-xl bg-white">
                   <h3 className="text-xl font-semibold text-[#606] mb-4">必修科目</h3>
                   <RequiredSubjectsTable
                     tabId={tab.id}
@@ -406,7 +406,7 @@ export default function WeightedAverageCalculator() {
                 </div>
 
                 {tab.id !== "1" && (
-                  <div className="shadow-2xl p-4 rounded-xl bg-white">
+                  <div className="shadow-lg p-4 rounded-xl bg-white">
                     <h3 className="text-xl font-semibold text-[#606] mb-4">
                       選択科目（{requiredCredits[tab.id]}単位選択）
                     </h3>
@@ -437,9 +437,13 @@ export default function WeightedAverageCalculator() {
           ))}
         </Tabs>
       )}
-      <footer className="text-center my-4 pt-2 border-t" style={{}}>
-        <p className='font-medium' style={{ fontSize: '0.8em' }}>Doshisha Senior High School GPA calculator</p>
-        <p className='font-extralight' style={{ fontSize: '0.4em' }}>&copy; 2024-{new Date().getFullYear()} Kanata Tsuda. All rights reserved.</p>
+      <footer className="text-center mt-10 pt-2 border-t">
+        <p className="font-medium" style={{ fontSize: "0.8em" }}>
+          Doshisha Senior High School GPA calculator
+        </p>
+        <p className="font-extralight" style={{ fontSize: "0.4em" }}>
+          &copy; 2024-{new Date().getFullYear()} Kanata Tsuda. All rights reserved.
+        </p>
       </footer>
     </div>
   )
