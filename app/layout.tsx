@@ -1,5 +1,5 @@
 import type React from "react"
-import type { Metadata } from "next"
+import { Metadata, Viewport } from 'next'
 import { Inter } from "next/font/google"
 import localFont from "next/font/local"
 import "./globals.css"
@@ -17,8 +17,15 @@ const seedFont = localFont({
 export const metadata: Metadata = {
   title: "加重平均計算機",
   description: "同志社高等学校の加重平均計算機",
-  generator: 'v0.dev',
-  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0"
+  generator: 'v0.dev'
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1.0,
+  maximumScale: 1.0,
+  userScalable: false,
+  viewportFit: 'cover'
 }
 
 export default function RootLayout({
