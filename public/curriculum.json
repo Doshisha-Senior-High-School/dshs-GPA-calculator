@@ -1,0 +1,448 @@
+{
+  "Grades": {
+    "1st_Year": {
+      "Subjects": [
+        {
+          "Subject": "キリスト教学",
+          "Category": "キリスト教学",
+          "Credits": 1,
+          "Required": true
+        },
+        {
+          "Subject": "現代の国語",
+          "Category": "国語",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "言語文化",
+          "Category": "国語",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "地理総合",
+          "Category": "社会",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "歴史総合",
+          "Category": "社会",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "数学 I",
+          "Category": "数学",
+          "Credits": 3,
+          "Required": true
+        },
+        {
+          "Subject": "数学A",
+          "Category": "数学",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "化学基礎",
+          "Category": "理科",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "体育",
+          "Category": "保健体育",
+          "Credits": 3,
+          "Required": true
+        },
+        {
+          "Subject": "保健",
+          "Category": "保健体育",
+          "Credits": 1,
+          "Required": true
+        },
+        {
+          "Subject": "音楽 I / 美術 I",
+          "Category": "芸術",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "英語コミュニケーション I",
+          "Category": "英語",
+          "Credits": 3,
+          "Required": true
+        },
+        {
+          "Subject": "論理･表現 I",
+          "Category": "英語",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "情報 I",
+          "Category": "情報",
+          "Credits": 2,
+          "Required": true
+        }
+      ]
+    },
+    "2nd_Year": {
+      "Subjects": [
+        {
+          "Subject": "キリスト教学",
+          "Category": "キリスト教学",
+          "Credits": 1,
+          "Required": true
+        },
+        {
+          "Subject": "論理国語",
+          "Category": "国語",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "古典探究",
+          "Category": "国語",
+          "Credits": 1,
+          "Required": true
+        },
+        {
+          "Subject": "公共",
+          "Category": "社会",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "数学 II",
+          "Category": "数学",
+          "Credits": 4,
+          "Required": true
+        },
+        {
+          "Subject": "生物基礎",
+          "Category": "理科",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "物理基礎",
+          "Category": "理科",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "体育",
+          "Category": "保健体育",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "保健",
+          "Category": "保健体育",
+          "Credits": 1,
+          "Required": true
+        },
+        {
+          "Subject": "英語コミュニケーション II",
+          "Category": "英語",
+          "Credits": 4,
+          "Required": true
+        },
+        {
+          "Subject": "家庭基礎",
+          "Category": "家庭科",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "国語表現法",
+          "Category": "国語",
+          "Credits": 2,
+          "Required": false
+        },
+        {
+          "Subject": "古典講読",
+          "Category": "国語",
+          "Credits": 2,
+          "Required": false
+        },
+        {
+          "Subject": "日本近現代史",
+          "Category": "社会",
+          "Credits": 2,
+          "Required": false,
+          "CannotTakeWith": [
+            "日本史探究"
+          ]
+        },
+        {
+          "Subject": "日本史探究",
+          "Category": "社会",
+          "Credits": 4,
+          "Required": false,
+          "CannotTakeWith": [
+            "日本近現代史"
+          ]
+        },
+        {
+          "Subject": "数学B",
+          "Category": "数学",
+          "Credits": 2,
+          "Required": false
+        },
+        {
+          "Subject": "化学",
+          "Category": "理科",
+          "Credits": 4,
+          "Required": false
+        },
+        {
+          "Subject": "現代のライフサイエンス",
+          "Category": "理科",
+          "Credits": 2,
+          "Required": false
+        },
+        {
+          "Subject": "論理･表現 II",
+          "Category": "英語",
+          "Credits": 2,
+          "Required": false
+        },
+        {
+          "Subject": "英語資格講座",
+          "Category": "英語",
+          "Credits": 2,
+          "Required": false
+        },
+        {
+          "Subject": "音楽 II",
+          "Category": "芸術",
+          "Credits": 2,
+          "Required": false,
+          "CannotTakeWith": [
+            "美術 II"
+          ]
+        },
+        {
+          "Subject": "美術 II",
+          "Category": "芸術",
+          "Credits": 2,
+          "Required": false,
+          "CannotTakeWith": [
+            "音楽 II"
+          ]
+        }
+      ]
+    },
+    "3rd_Year": {
+      "Subjects": [
+        {
+          "Subject": "キリスト教学",
+          "Category": "キリスト教学",
+          "Credits": 1,
+          "Required": true
+        },
+        {
+          "Subject": "論理国語",
+          "Category": "国語",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "古典探究",
+          "Category": "国語",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "倫理",
+          "Category": "社会",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "数学B / C",
+          "Category": "数学",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "地学基礎",
+          "Category": "理科",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "体育",
+          "Category": "保健体育",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "英語コミュニケーション III",
+          "Category": "英語",
+          "Credits": 4,
+          "Required": true
+        },
+        {
+          "Subject": "論理･表現 II / III",
+          "Category": "英語",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "総合的な探究の時間",
+          "Category": "探究",
+          "Credits": 2,
+          "Required": true
+        },
+        {
+          "Subject": "キリスト教学特論",
+          "Category": "キリスト教学",
+          "Credits": 2,
+          "Required": false
+        },
+        {
+          "Subject": "古典特論",
+          "Category": "国語",
+          "Credits": 2,
+          "Required": false
+        },
+        {
+          "Subject": "日本近現代史",
+          "Category": "社会",
+          "Credits": 2,
+          "Required": false
+        },
+        {
+          "Subject": "日本史探究",
+          "Category": "社会",
+          "Credits": 4,
+          "Required": false
+        },
+        {
+          "Subject": "世界史探究",
+          "Category": "社会",
+          "Credits": 4,
+          "Required": false
+        },
+        {
+          "Subject": "地理探究",
+          "Category": "社会",
+          "Credits": 4,
+          "Required": false
+        },
+        {
+          "Subject": "現代思想特論",
+          "Category": "社会",
+          "Credits": 2,
+          "Required": false
+        },
+        {
+          "Subject": "政治･経済",
+          "Category": "社会",
+          "Credits": 2,
+          "Required": false
+        },
+        {
+          "Subject": "数学 III",
+          "Category": "数学",
+          "Credits": 4,
+          "Required": false
+        },
+        {
+          "Subject": "物理",
+          "Category": "理科",
+          "Credits": 4,
+          "Required": false
+        },
+        {
+          "Subject": "化学",
+          "Category": "理科",
+          "Credits": 4,
+          "Required": false
+        },
+        {
+          "Subject": "生物",
+          "Category": "理科",
+          "Credits": 4,
+          "Required": false,
+          "CannotTakeWith": [
+            "現代のライフサイエンス"
+          ]
+        },
+        {
+          "Subject": "地学",
+          "Category": "理科",
+          "Credits": 4,
+          "Required": false
+        },
+        {
+          "Subject": "現代のライフサイエンス",
+          "Category": "理科",
+          "Credits": 2,
+          "Required": false,
+          "CannotTakeWith": [
+            "生物"
+          ]
+        },
+        {
+          "Subject": "体育A",
+          "Category": "保健体育",
+          "Credits": 2,
+          "Required": false,
+          "CannotTakeWith": [
+            "体育B"
+          ]
+        },
+        {
+          "Subject": "体育B",
+          "Category": "保健体育",
+          "Credits": 2,
+          "Required": false,
+          "CannotTakeWith": [
+            "体育A"
+          ]
+        },
+        {
+          "Subject": "音楽 III",
+          "Category": "芸術",
+          "Credits": 2,
+          "Required": false
+        },
+        {
+          "Subject": "美術 III",
+          "Category": "芸術",
+          "Credits": 2,
+          "Required": false
+        },
+        {
+          "Subject": "英語会話",
+          "Category": "英語",
+          "Credits": 2,
+          "Required": false
+        },
+        {
+          "Subject": "家庭特論",
+          "Category": "家庭科",
+          "Credits": 2,
+          "Required": false
+        },
+        {
+          "Subject": "情報 II",
+          "Category": "情報",
+          "Credits": 2,
+          "Required": false
+        },
+        {
+          "Subject": "多言語多文化",
+          "Category": "多言語多文化",
+          "Credits": 2,
+          "Required": false
+        }
+      ]
+    }
+  }
+}
