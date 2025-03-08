@@ -17,8 +17,7 @@ const seedFont = localFont({
 export const metadata: Metadata = {
   title: "加重平均計算機",
   description: "同志社高等学校の加重平均計算機",
-  generator: 'v0.dev',
-  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0"
+  generator: 'v0.dev'
 }
 
 export default function RootLayout({
