@@ -60,19 +60,21 @@ export default function RequiredSubjectsTable({ tabId, subjects, scores, onScore
                   inputMode="numeric"
                   id={`score${tabId}_req_${index}`}
                   value={scores[`score${tabId}_req_${index}`] || ""}
+                  // required-subjects-table.tsx の変更部分
                   onChange={(e) => {
-                    const value = e.target.value
-                    onScoreChange(`score${tabId}_req_${index}`, value)
+                    const value = e.target.value;
+                    onScoreChange(`score${tabId}_req_${index}`, value);
 
-                    // 2-10の数字が入力されたら次のフィールドにフォーカス
-                    if (/^[2-9]$/.test(value) || value.trim() === "10") {
-                      focusNextInput(index)
+                    // 2-9の数字が入力されたらか10の場合に次のフィールドにフォーカス
+                    // 1の場合はフォーカスを移動しない
+                    if ((/^[2-9]$/.test(value) || value.trim() === "10") && value !== "1") {
+                      focusNextInput(index);
                     } else {
                       // 11以上の場合は右1桁を評価の値とし、次のフィールドにフォーカス
-                      const lastChar = value.slice(-1)
-                      if (/^[0-9]$/.test(lastChar)) {
-                        onScoreChange(`score${tabId}_req_${index}`, lastChar)
-                        focusNextInput(index)
+                      const lastChar = value.slice(-1);
+                      if (/^[0-9]$/.test(lastChar) && lastChar !== "1") {
+                        onScoreChange(`score${tabId}_req_${index}`, lastChar);
+                        focusNextInput(index);
                       }
                     }
                   }}
