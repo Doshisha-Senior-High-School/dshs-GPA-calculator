@@ -182,34 +182,36 @@ export default function ElectiveSubjectsTable({
                 <TableCell className="text-center">{selectedElectives[rowIndex]?.Credits || ""}</TableCell>
                 <TableCell className="text-center">
                   <div className="flex justify-center">
-                  <Input
-                    type="text"
-                    inputMode="numeric"
-                    id={`elective${tabId}_score_${rowIndex}`}
-                    value={scores[`elective${tabId}_score_${rowIndex}`] || ""}
-                    onChange={(e) => {
-                    const value = e.target.value
-                    onScoreChange(`elective${tabId}_score_${rowIndex}`, value)
+                    <Input
+                      type="text"
+                      inputMode="numeric"
+                      id={`elective${tabId}_score_${rowIndex}`}
+                      value={scores[`elective${tabId}_score_${rowIndex}`] || ""}
+                      // elective-subjects-table.tsx の変更部分
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        onScoreChange(`elective${tabId}_score_${rowIndex}`, value);
 
-                    // 2-10の数字が入力されたら次のフィールドにフォーカス
-                    if (/^[2-9]$/.test(value) || value.trim() === "10") {
-                      focusNextInput(rowIndex)
-                    } else {
-                      // 11以上の場合は右1桁を評価の値とし、次のフィールドにフォーカス
-                      const lastChar = value.slice(-1)
-                      if (/^[0-9]$/.test(lastChar)) {
-                      onScoreChange(`elective${tabId}_score_${rowIndex}`, lastChar)
-                      focusNextInput(rowIndex)
-                      }
-                    }
-                    }}
-                    ref={(el) => {
-                    inputRefs.current[`elective${tabId}_score_${rowIndex}`] = el
-                    }}
-                    disabled={!selectedElectives[rowIndex]}
-                    className="w-10 text-center"
-                    autoComplete="off"
-                  />
+                        // 2-9の数字または10が入力されたら次のフィールドにフォーカス
+                        // 1の場合はフォーカスを移動しない
+                        if ((/^[2-9]$/.test(value) || value.trim() === "10") && value !== "1") {
+                          focusNextInput(rowIndex);
+                        } else {
+                          // 11以上の場合は右1桁を評価の値とし、次のフィールドにフォーカス
+                          const lastChar = value.slice(-1);
+                          if (/^[0-9]$/.test(lastChar) && lastChar !== "1") {
+                            onScoreChange(`elective${tabId}_score_${rowIndex}`, lastChar);
+                            focusNextInput(rowIndex);
+                          }
+                        }
+                      }}
+                      ref={(el) => {
+                        inputRefs.current[`elective${tabId}_score_${rowIndex}`] = el
+                      }}
+                      disabled={!selectedElectives[rowIndex]}
+                      className="w-10 text-center"
+                      autoComplete="off"
+                    />
                   </div>
                 </TableCell>
 
