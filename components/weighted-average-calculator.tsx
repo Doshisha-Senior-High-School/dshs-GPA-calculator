@@ -35,7 +35,7 @@ export default function WeightedAverageCalculator() {
   })
   const [violatedRules, setViolatedRules] = useState<string[]>([])
 
-  const requiredCredits = {
+  const requiredCredits: Record<string, number> = {
     "2": 6,
     "3": 8,
   }
@@ -87,7 +87,7 @@ export default function WeightedAverageCalculator() {
 
   // 評価の変更をローカルストレージに保存
   useEffect(() => {
-    // localStorage.setItem(STORAGE_KEYS.SCORES, JSON.stringify(scores))
+    localStorage.setItem(STORAGE_KEYS.SCORES, JSON.stringify(scores))
   }, [scores])
 
   const fetchCurriculumData = async () => {
@@ -188,7 +188,8 @@ export default function WeightedAverageCalculator() {
 
       // Get scores for elective subjects
       for (const rowIndex in selectedSubjectsForTab) {
-        const scoreInputId = `elective${tabId}_score_${rowIndex}`
+        const subject = selectedSubjectsForTab[rowIndex]
+        const scoreInputId = `elective${tabId}_score_${subject.Subject.replace(/\s+/g, '_')}`
         const scoreValue = scores[scoreInputId]
 
         if (!scoreValue) {
@@ -197,7 +198,7 @@ export default function WeightedAverageCalculator() {
         }
 
         validScoresCount++
-        const credit = selectedSubjectsForTab[rowIndex].Credits
+        const credit = subject.Credits
         const score = Number.parseInt(scoreValue)
         totalWeightedScores += credit * score
         totalCredits += credit
@@ -268,14 +269,15 @@ export default function WeightedAverageCalculator() {
       const selectedSubjectsForTab = selectedElectives[tabId]
 
       for (const rowIndex in selectedSubjectsForTab) {
-        const scoreInputId = `elective${tabId}_score_${rowIndex}`
+        const subject = selectedSubjectsForTab[rowIndex]
+        const scoreInputId = `elective${tabId}_score_${subject.Subject.replace(/\s+/g, '_')}`
         const scoreValue = scores[scoreInputId]
 
         if (!scoreValue) continue
 
         totalEnteredSubjects++
         const score = Number.parseInt(scoreValue)
-        const credit = selectedSubjectsForTab[rowIndex].Credits
+        const credit = subject.Credits
 
         if (score === 1) {
           score1count++

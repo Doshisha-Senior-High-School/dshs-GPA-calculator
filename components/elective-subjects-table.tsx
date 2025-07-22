@@ -40,27 +40,34 @@ export default function ElectiveSubjectsTable({
 
   // Update rows when selections change
   useEffect(() => {
-    // 選択された行の数を確認
-    const selectedRows = Object.keys(selectedElectives).map((key) => Number.parseInt(key))
-
+    // 選択された科目をJSONの順番でソートする
+    const selectedSubjects = Object.values(selectedElectives)
+    
     // 選択がない場合は少なくとも1行表示
-    if (selectedRows.length === 0) {
+    if (selectedSubjects.length === 0) {
       setRows([0])
       return
     }
 
-    // 最後の選択された行の次の行を追加（必要な単位数に達していない場合）
-    const maxSelectedRow = Math.max(...selectedRows)
+    // JSONの順番に基づいて選択された科目をソート
+    const sortedSelectedSubjects = selectedSubjects.sort((a, b) => {
+      const indexA = subjects.findIndex(s => s.Subject === a.Subject)
+      const indexB = subjects.findIndex(s => s.Subject === b.Subject)
+      return indexA - indexB
+    })
+
+    // ソートされた科目に基づいて行番号を再設定
+    const sortedRows = sortedSelectedSubjects.map((_, index) => index)
 
     if (selectedCredits < requiredCredits) {
-      // 既存の行に加えて、最後の選択された行の次の行を表示
-      const newRows = Array.from(new Set([...selectedRows, maxSelectedRow + 1])).sort((a, b) => a - b)
-      setRows(newRows)
+      // 必要単位数に達していない場合は、次の行を追加
+      const nextRowIndex = sortedRows.length
+      setRows([...sortedRows, nextRowIndex])
     } else {
       // 必要単位数に達した場合は、選択された行のみ表示
-      setRows(selectedRows.sort((a, b) => a - b))
+      setRows(sortedRows)
     }
-  }, [selectedElectives, requiredCredits, selectedCredits])
+  }, [selectedElectives, requiredCredits, selectedCredits, subjects])
 
   // 次の入力フィールドにフォーカスを移動する関数
   const focusNextInput = (currentRowIndex: number) => {
@@ -70,31 +77,55 @@ export default function ElectiveSubjectsTable({
     // 次の行があるか確認
     if (currentIndex < currentRows.length - 1) {
       const nextRowIndex = currentRows[currentIndex + 1]
-      const nextInputId = `elective${tabId}_score_${nextRowIndex}`
+      const nextSelectedSubject = getSelectedSubjectForRow(nextRowIndex)
 
       // 次の行の入力フィールドが有効な場合、フォーカスを移動
-      if (selectedElectives[nextRowIndex] && inputRefs.current[nextInputId]) {
-        inputRefs.current[nextInputId]?.focus()
+      if (nextSelectedSubject) {
+        const nextInputId = `elective${tabId}_score_${nextSelectedSubject.Subject.replace(/\s+/g, '_')}`
+        if (inputRefs.current[nextInputId]) {
+          inputRefs.current[nextInputId]?.focus()
+        }
       }
     } else {
       //ボタンにフォーカス
-      document.querySelector("#calculate-button")?.focus()
+      const calculateButton = document.querySelector("#calculate-button") as HTMLElement
+      if (calculateButton) {
+        calculateButton.focus()
+      }
     }
-  }
-
-  // 選択肢のずれを修正するために、選択された値を行インデックスではなく科目インデックスに変更
-  const getSelectedValue = (rowIndex: number): string => {
-    if (!selectedElectives[rowIndex]) return ""
-
-    const selectedSubject = selectedElectives[rowIndex]
-    const subjectIndex = subjects.findIndex((s) => s.Subject === selectedSubject.Subject)
-
-    return subjectIndex >= 0 ? subjectIndex.toString() : ""
   }
 
   // 科目を削除する関数
   const handleRemoveSubject = (rowIndex: number) => {
-    onElectiveSelection(tabId, rowIndex.toString(), "")
+    // JSON順序で並んだ科目から実際の科目を取得
+    const selectedSubjects = Object.values(selectedElectives)
+    const sortedSelectedSubjects = selectedSubjects.sort((a, b) => {
+      const indexA = subjects.findIndex(s => s.Subject === a.Subject)
+      const indexB = subjects.findIndex(s => s.Subject === b.Subject)
+      return indexA - indexB
+    })
+    
+    const subjectToRemove = sortedSelectedSubjects[rowIndex]
+    if (subjectToRemove) {
+      // 元の selectedElectives から該当する科目を探して削除
+      const originalRowIndex = Object.keys(selectedElectives).find(key => 
+        selectedElectives[key].Subject === subjectToRemove.Subject
+      )
+      if (originalRowIndex) {
+        onElectiveSelection(tabId, originalRowIndex, "")
+      }
+    }
+  }
+
+  // 現在表示されている行に対応する選択された科目を取得
+  const getSelectedSubjectForRow = (rowIndex: number) => {
+    const selectedSubjects = Object.values(selectedElectives)
+    const sortedSelectedSubjects = selectedSubjects.sort((a, b) => {
+      const indexA = subjects.findIndex(s => s.Subject === a.Subject)
+      const indexB = subjects.findIndex(s => s.Subject === b.Subject)
+      return indexA - indexB
+    })
+    return sortedSelectedSubjects[rowIndex] || null
   }
 
   return (
@@ -113,7 +144,8 @@ export default function ElectiveSubjectsTable({
         </TableHeader>
         <TableBody>
           {rows.map((rowIndex) => {
-            const isSelected = !!selectedElectives[rowIndex]
+            const selectedSubject = getSelectedSubjectForRow(rowIndex)
+            const isSelected = !!selectedSubject
 
             return (
               <TableRow key={`elective${tabId}_row_${rowIndex}`}>
@@ -121,23 +153,23 @@ export default function ElectiveSubjectsTable({
                   {isSelected ? (
                     // 選択済みの場合は科目名を表示
                     <div className="min-h-10 flex items-center border-input rounded-md bg-background break-words">
-                      {selectedElectives[rowIndex].Subject}
+                      {selectedSubject.Subject}
                     </div>
                   ) : (
                     // 未選択の場合はセレクトボックスを表示
                     <Select
-                      value={getSelectedValue(rowIndex)}
+                      value=""
                       onValueChange={(value) => {
                         if (value === "" || value === "-1") {
-                          onElectiveSelection(tabId, rowIndex.toString(), "")
+                          // 何もしない（未選択の場合）
                         } else {
                           const index = Number.parseInt(value)
                           // インデックスが有効かどうか確認
                           if (!isNaN(index) && index >= 0 && index < subjects.length) {
-                            onElectiveSelection(tabId, rowIndex.toString(), index.toString())
-                          } else {
-                            // 無効なインデックスの場合は選択をクリア
-                            onElectiveSelection(tabId, rowIndex.toString(), "")
+                            // 新しい行番号を生成（既存の最大行番号+1）
+                            const existingRowIndices = Object.keys(selectedElectives).map(k => Number.parseInt(k))
+                            const newRowIndex = existingRowIndices.length > 0 ? Math.max(...existingRowIndices) + 1 : 0
+                            onElectiveSelection(tabId, newRowIndex.toString(), index.toString())
                           }
                         }
                       }}
@@ -150,9 +182,8 @@ export default function ElectiveSubjectsTable({
                         {subjects.map((subject, index) => {
                           // 残りの必要単位数を超える科目は選択できないようにする
                           const isSelectable =
-                            selectedElectives[rowIndex]?.Subject === subject.Subject ||
-                            (isSubjectSelectable(tabId, subject) &&
-                              (subject.Credits <= remainingCredits || selectedElectives[rowIndex]))
+                            isSubjectSelectable(tabId, subject) &&
+                            subject.Credits <= remainingCredits
 
                           return (
                             isSelectable && (
@@ -179,39 +210,40 @@ export default function ElectiveSubjectsTable({
                     </Button>
                   )}
                 </TableCell>
-                <TableCell className="text-center">{selectedElectives[rowIndex]?.Credits || ""}</TableCell>
+                <TableCell className="text-center">{selectedSubject?.Credits || ""}</TableCell>
                 <TableCell className="text-center">
                   <div className="flex justify-center">
-                    <Input
-                      type="text"
-                      inputMode="numeric"
-                      id={`elective${tabId}_score_${rowIndex}`}
-                      value={scores[`elective${tabId}_score_${rowIndex}`] || ""}
-                      // elective-subjects-table.tsx の変更部分
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        onScoreChange(`elective${tabId}_score_${rowIndex}`, value);
+                    {selectedSubject && (
+                      <Input
+                        type="text"
+                        inputMode="numeric"
+                        id={`elective${tabId}_score_${selectedSubject.Subject.replace(/\s+/g, '_')}`}
+                        value={scores[`elective${tabId}_score_${selectedSubject.Subject.replace(/\s+/g, '_')}`] || ""}
+                        // elective-subjects-table.tsx の変更部分
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          onScoreChange(`elective${tabId}_score_${selectedSubject.Subject.replace(/\s+/g, '_')}`, value);
 
-                        // 2-9の数字または10が入力されたら次のフィールドにフォーカス
-                        // 1の場合はフォーカスを移動しない
-                        if ((/^[2-9]$/.test(value) || value.trim() === "10") && value !== "1") {
-                          focusNextInput(rowIndex);
-                        } else {
-                          // 11以上の場合は右1桁を評価の値とし、次のフィールドにフォーカス
-                          const lastChar = value.slice(-1);
-                          if (/^[0-9]$/.test(lastChar) && lastChar !== "1") {
-                            onScoreChange(`elective${tabId}_score_${rowIndex}`, lastChar);
+                          // 2-9の数字または10が入力されたら次のフィールドにフォーカス
+                          // 1の場合はフォーカスを移動しない
+                          if ((/^[2-9]$/.test(value) || value.trim() === "10") && value !== "1") {
                             focusNextInput(rowIndex);
+                          } else {
+                            // 11以上の場合は右1桁を評価の値とし、次のフィールドにフォーカス
+                            const lastChar = value.slice(-1);
+                            if (/^[0-9]$/.test(lastChar) && lastChar !== "1") {
+                              onScoreChange(`elective${tabId}_score_${selectedSubject.Subject.replace(/\s+/g, '_')}`, lastChar);
+                              focusNextInput(rowIndex);
+                            }
                           }
-                        }
-                      }}
-                      ref={(el) => {
-                        inputRefs.current[`elective${tabId}_score_${rowIndex}`] = el
-                      }}
-                      disabled={!selectedElectives[rowIndex]}
-                      className="w-10 text-center"
-                      autoComplete="off"
-                    />
+                        }}
+                        ref={(el) => {
+                          inputRefs.current[`elective${tabId}_score_${selectedSubject.Subject.replace(/\s+/g, '_')}`] = el
+                        }}
+                        className="w-10 text-center"
+                        autoComplete="off"
+                      />
+                    )}
                   </div>
                 </TableCell>
 
