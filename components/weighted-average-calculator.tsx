@@ -115,6 +115,11 @@ export default function WeightedAverageCalculator() {
       ...prev,
       [id]: value,
     }))
+    
+    // 入力値が変更された場合、結果表示を非表示にする
+    if (result.visible) {
+      setResult(prev => ({ ...prev, visible: false }))
+    }
   }
 
   const handleElectiveSelection = (tabId: string, rowIndex: string, subjectIndex: string) => {
@@ -136,6 +141,20 @@ export default function WeightedAverageCalculator() {
     }
 
     setSelectedElectives(newSelectedElectives)
+    
+    // 選択科目が変更された場合、結果表示を非表示にする
+    if (result.visible) {
+      setResult(prev => ({ ...prev, visible: false }))
+    }
+  }
+
+  const handleTabChange = (tabValue: string) => {
+    setActiveTab(tabValue)
+    
+    // タブが変更された場合、結果表示を非表示にする
+    if (result.visible) {
+      setResult(prev => ({ ...prev, visible: false }))
+    }
   }
 
   const calculateGPA = () => {
@@ -383,7 +402,7 @@ export default function WeightedAverageCalculator() {
       </header>
 
       {curriculumData && (
-        <Tabs defaultValue={activeTab} value={activeTab} onValueChange={setActiveTab}>
+        <Tabs defaultValue={activeTab} value={activeTab} onValueChange={handleTabChange}>
           <TabsList className="grid grid-cols-3 mb-8 border-b bg-[#eee]">
             {tabs.map((tab) => (
               <TabsTrigger key={tab.id} value={tab.id}>
