@@ -26,7 +26,7 @@ export default function DisclaimerDialog() {
   }
 
   return (
-    <Dialog open={open} onOpenChange={() => {}}>
+    <Dialog open={open} onOpenChange={() => { }}>
       <DialogContent className="sm:max-w-[500px] p-6">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-xl font-bold text-gray-800">
@@ -37,7 +37,7 @@ export default function DisclaimerDialog() {
             ご利用前に以下の内容をご確認ください
           </DialogDescription>
         </DialogHeader>
-        
+
         <div className="space-y-4 my-6">
           <Alert className="border-blue-200 bg-blue-50">
             <Users className="h-4 w-4 text-blue-600" />
@@ -60,13 +60,13 @@ export default function DisclaimerDialog() {
             <Info className="h-4 w-4 text-green-600" />
             <AlertDescription className="text-sm text-gray-700">
               <strong>プライバシーについて</strong><br />
-              入力データは端末の中だけで処理され、外部には送信されません。
+              入力データは端末の中だけで処理され、外部には送信されません。（※AI目標算出時を除く）
             </AlertDescription>
           </Alert>
         </div>
 
         <DialogFooter>
-          <Button 
+          <Button
             onClick={handleAccept}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5"
           >

@@ -63,6 +63,13 @@ export default function RequiredSubjectsTable({ tabId, subjects, scores, onScore
                   // required-subjects-table.tsx の変更部分
                   onChange={(e) => {
                     const value = e.target.value;
+                    
+                    // 10段階評価（1〜10）の範囲チェック
+                    const numValue = Number.parseInt(value);
+                    if (value !== "" && (isNaN(numValue) || numValue < 1 || numValue > 10)) {
+                      return;
+                    }
+                    
                     onScoreChange(`score${tabId}_req_${index}`, value);
 
                     // 2-9の数字が入力されたらか10の場合に次のフィールドにフォーカス

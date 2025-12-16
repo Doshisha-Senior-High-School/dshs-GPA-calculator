@@ -9,6 +9,7 @@ import ElectiveSubjectsTable from "./elective-subjects-table"
 import CalculateButton from "./calculate-button"
 import ResultArea from "./result-area"
 import PromotionRulesArea from "./promotion-rules-area"
+import YearEndSimulator from "./year-end-simulator"
 import type { CurriculumData, Subject, SelectedElectives } from "@/types/curriculum"
 
 // ローカルストレージのキー
@@ -453,6 +454,19 @@ export default function WeightedAverageCalculator() {
                     {violatedRules.length > 0 && <PromotionRulesArea rules={violatedRules} />}
                   </>
                 )}
+
+                {/* 学年末評価シミュレーター（期間限定） */}
+                <YearEndSimulator
+                  subjects={[
+                    ...curriculumData.Grades[tab.key].Subjects.filter(
+                      (subject) => tab.id === "1" || subject.Required,
+                    ),
+                    ...(tab.id !== "1"
+                      ? Object.values(selectedElectives[tab.id])
+                      : []),
+                  ]}
+                  tabId={tab.id}
+                />
               </div>
             </TabsContent>
           ))}

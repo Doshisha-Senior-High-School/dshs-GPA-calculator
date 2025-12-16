@@ -222,6 +222,13 @@ export default function ElectiveSubjectsTable({
                         // elective-subjects-table.tsx の変更部分
                         onChange={(e) => {
                           const value = e.target.value;
+                          
+                          // 10段階評価（1〜10）の範囲チェック
+                          const numValue = Number.parseInt(value);
+                          if (value !== "" && (isNaN(numValue) || numValue < 1 || numValue > 10)) {
+                            return;
+                          }
+                          
                           onScoreChange(`elective${tabId}_score_${selectedSubject.Subject.replace(/\s+/g, '_')}`, value);
 
                           // 2-9の数字または10が入力されたら次のフィールドにフォーカス
