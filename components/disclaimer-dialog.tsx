@@ -43,16 +43,8 @@ export default function DisclaimerDialog() {
             <Users className="h-4 w-4 text-blue-600" />
             <AlertDescription className="text-sm text-gray-700">
               <strong>運営元について</strong><br />
-              この加重平均計算機は、2025年度の同志社高校2年生のみで運営しています。
+              この加重平均計算機は2年生有志で制作･運営しています。
               同志社高校の公式アプリではありません。
-            </AlertDescription>
-          </Alert>
-
-          <Alert className="border-amber-200 bg-amber-50">
-            <AlertTriangle className="h-4 w-4 text-amber-600" />
-            <AlertDescription className="text-sm text-gray-700">
-              <strong>進級と進学の関連性</strong><br />
-              進級･卒業できても進学できるとは限りません。詳しくは「進学のしおり」をご確認ください。
             </AlertDescription>
           </Alert>
 
@@ -60,7 +52,7 @@ export default function DisclaimerDialog() {
             <Info className="h-4 w-4 text-green-600" />
             <AlertDescription className="text-sm text-gray-700">
               <strong>プライバシーについて</strong><br />
-              入力データは端末の中だけで処理され、外部には送信されません。（※AI目標算出時を除く）
+              入力データは端末の中だけで処理され、外部には送信されません。（※AI算出時を除く）
             </AlertDescription>
           </Alert>
         </div>

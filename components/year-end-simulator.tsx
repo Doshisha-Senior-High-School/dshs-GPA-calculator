@@ -39,6 +39,7 @@ type SimulationResult = {
 type YearEndSimulatorProps = {
   subjects: Subject[]
   tabId: string
+  insufficientCredits?: boolean
 }
 
 // 丸囲み数字への変換ヘルパー
@@ -49,7 +50,7 @@ const toCircled = (num: number): string => {
   return num.toString()
 }
 
-export default function YearEndSimulator({ subjects, tabId }: YearEndSimulatorProps) {
+export default function YearEndSimulator({ subjects, tabId, insufficientCredits = false }: YearEndSimulatorProps) {
   const [targetAvg, setTargetAvg] = useState<string>("")
   const [subjectScores, setSubjectScores] = useState<Record<string, SubjectScore>>({})
   const [result, setResult] = useState<SimulationResult | null>(null)
@@ -63,7 +64,7 @@ export default function YearEndSimulator({ subjects, tabId }: YearEndSimulatorPr
   // Aptitude Settings
   const [isGoodAtMemorization, setIsGoodAtMemorization] = useState(false)
   const [isBadAtMemorization, setIsBadAtMemorization] = useState(false)
-  const [academicType, setAcademicType] = useState<"science" | "humanities" | "general">("general")
+  const [academicType, setAcademicType] = useState<"science" | "humanities" | "general" | undefined>(undefined)
 
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({})
   const resultRef = useRef<HTMLDivElement>(null)
@@ -469,7 +470,25 @@ export default function YearEndSimulator({ subjects, tabId }: YearEndSimulatorPr
             animation: fast-blink 0.5s linear infinite;
           }
         `}</style>
-        <div className="grid gap-6">
+        <div className="grid gap-6 relative">
+          {insufficientCredits && (
+            <div className="absolute inset-0 z-50 bg-white/80 backdrop-blur-sm flex items-center justify-center rounded-lg border-2 border-indigo-100">
+              <div className="text-center p-6 bg-white rounded-xl shadow-xl border border-indigo-200 max-w-sm mx-4">
+                <AlertCircle className="h-12 w-12 text-indigo-500 mx-auto mb-4" />
+                <h3 className="font-bold text-lg mb-2">選択科目が足りません</h3>
+                <p className="text-gray-600 mb-4 text-sm">
+                  上の「選択科目」表で、必要な単位数分の科目を選択してからシミュレーターを利用してください。
+                </p>
+                <Button
+                  onClick={() => window.scrollTo({ top: 300, behavior: 'smooth' })}
+                  variant="outline"
+                  className="w-full"
+                >
+                  上の表を確認する
+                </Button>
+              </div>
+            </div>
+          )}
           <div>
             <Label htmlFor="targetAvg">目標加重平均 (1〜10)</Label>
             <Input

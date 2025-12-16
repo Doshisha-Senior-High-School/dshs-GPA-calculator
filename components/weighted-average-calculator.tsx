@@ -29,10 +29,10 @@ export default function WeightedAverageCalculator() {
     "3": {},
   })
   const [scores, setScores] = useState<Record<string, string>>({})
-  const [result, setResult] = useState<{ average: number; visible: boolean; promotable: boolean }>({ 
-    average: 0, 
-    visible: false, 
-    promotable: true 
+  const [result, setResult] = useState<{ average: number; visible: boolean; promotable: boolean }>({
+    average: 0,
+    visible: false,
+    promotable: true
   })
   const [violatedRules, setViolatedRules] = useState<string[]>([])
 
@@ -116,7 +116,7 @@ export default function WeightedAverageCalculator() {
       ...prev,
       [id]: value,
     }))
-    
+
     // 入力値が変更された場合、結果表示を非表示にする
     if (result.visible) {
       setResult(prev => ({ ...prev, visible: false }))
@@ -142,7 +142,7 @@ export default function WeightedAverageCalculator() {
     }
 
     setSelectedElectives(newSelectedElectives)
-    
+
     // 選択科目が変更された場合、結果表示を非表示にする
     if (result.visible) {
       setResult(prev => ({ ...prev, visible: false }))
@@ -151,7 +151,7 @@ export default function WeightedAverageCalculator() {
 
   const handleTabChange = (tabValue: string) => {
     setActiveTab(tabValue)
-    
+
     // タブが変更された場合、結果表示を非表示にする
     if (result.visible) {
       setResult(prev => ({ ...prev, visible: false }))
@@ -466,6 +466,11 @@ export default function WeightedAverageCalculator() {
                       : []),
                   ]}
                   tabId={tab.id}
+                  insufficientCredits={
+                    tab.id !== "1" &&
+                    Object.values(selectedElectives[tab.id]).reduce((sum, s) => sum + s.Credits, 0) <
+                    requiredCredits[tab.id]
+                  }
                 />
               </div>
             </TabsContent>
