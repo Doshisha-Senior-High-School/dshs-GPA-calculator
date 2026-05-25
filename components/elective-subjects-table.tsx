@@ -221,8 +221,14 @@ export default function ElectiveSubjectsTable({
                         value={scores[`elective${tabId}_score_${selectedSubject.Subject.replace(/\s+/g, '_')}`] || ""}
                         // elective-subjects-table.tsx の変更部分
                         onChange={(e) => {
-                          const value = e.target.value;
+                          let value = e.target.value;
                           
+                          // すでに入力されている状態に新しく数字を入力すると2桁以上になるため、
+                          // 新しく入力された最後の文字を採用する (ただし "10" は例外)
+                          if (value.length > 1 && value !== "10") {
+                            value = value.slice(-1);
+                          }
+
                           // 10段階評価（1〜10）の範囲チェック
                           const numValue = Number.parseInt(value);
                           if (value !== "" && (isNaN(numValue) || numValue < 1 || numValue > 10)) {
@@ -231,19 +237,12 @@ export default function ElectiveSubjectsTable({
                           
                           onScoreChange(`elective${tabId}_score_${selectedSubject.Subject.replace(/\s+/g, '_')}`, value);
 
-                          // 2-9の数字または10が入力されたら次のフィールドにフォーカス
-                          // 1の場合はフォーカスを移動しない
-                          if ((/^[2-9]$/.test(value) || value.trim() === "10") && value !== "1") {
+                          // 2-9の数字が入力されたか、10の場合に次のフィールドにフォーカス
+                          if ((/^[2-9]$/.test(value) || value === "10") && value !== "1") {
                             focusNextInput(rowIndex);
-                          } else {
-                            // 11以上の場合は右1桁を評価の値とし、次のフィールドにフォーカス
-                            const lastChar = value.slice(-1);
-                            if (/^[0-9]$/.test(lastChar) && lastChar !== "1") {
-                              onScoreChange(`elective${tabId}_score_${selectedSubject.Subject.replace(/\s+/g, '_')}`, lastChar);
-                              focusNextInput(rowIndex);
-                            }
                           }
                         }}
+                        onFocus={(e) => e.target.select()}
                         ref={(el) => {
                           inputRefs.current[`elective${tabId}_score_${selectedSubject.Subject.replace(/\s+/g, '_')}`] = el
                         }}

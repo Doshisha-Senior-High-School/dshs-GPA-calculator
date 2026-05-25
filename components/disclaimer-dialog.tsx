@@ -43,8 +43,8 @@ export default function DisclaimerDialog() {
             <Users className="h-4 w-4 text-blue-600" />
             <AlertDescription className="text-sm text-gray-700">
               <strong>運営元について</strong><br />
-              この加重平均計算機は2年生有志で制作･運営しています。
-              同志社高校の公式アプリではありません。
+              この加重平均計算機は3年生有志で制作･運営しています。
+              同志社高校の公式アプリではありません。また、外部の学習塾・学習舎との関連はありません。
             </AlertDescription>
           </Alert>
 

@@ -34,8 +34,8 @@ export async function POST(req: Request) {
         let aptitudeText = ""
         if (academicType === "science") aptitudeText += "- 生徒は「理系」です。数学・理科などの科目を優先的に伸ばしてください（得意な傾向）。\n"
         if (academicType === "humanities") aptitudeText += "- 生徒は「文系」です。国語・英語・社会などの科目を優先的に伸ばしてください（得意な傾向）。\n"
-        if (isGoodAtMemorization) aptitudeText += "- 生徒は「暗記が得意」です。歴史・生物・英語などの暗記要素が強い科目の点数を高めに設定してください。\n"
-        if (isBadAtMemorization) aptitudeText += "- 生徒は「暗記が苦手」です。歴史・公共・地理・生物・地学・家庭科・古典・英語などの暗記要素が強い科目は、点数が伸びにくい（現状維持か小幅な上昇、あるいは低下）という前提で算出してください。\n"
+        if (isGoodAtMemorization) aptitudeText += "- 生徒は「暗記が得意」です。歴史・公共・地理・生物・地学・家庭科・古典などの暗記要素が強い科目の点数を高めに設定してください。\n"
+        if (isBadAtMemorization) aptitudeText += "- 生徒は「暗記が苦手」です。歴史・公共・地理・生物・地学・家庭科・古典などの暗記要素が強い科目は、点数が伸びにくい（現状維持か小幅な上昇、あるいは低下）という前提で算出してください。\n"
 
         const prompt = `
 あなたは学校の成績アドバイザーです。

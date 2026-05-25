@@ -456,7 +456,7 @@ export default function WeightedAverageCalculator() {
                 )}
 
                 {/* 学年末評価シミュレーター（期間限定） */}
-                <YearEndSimulator
+                {/* <YearEndSimulator
                   subjects={[
                     ...curriculumData.Grades[tab.key].Subjects.filter(
                       (subject) => tab.id === "1" || subject.Required,
@@ -471,7 +471,7 @@ export default function WeightedAverageCalculator() {
                     Object.values(selectedElectives[tab.id]).reduce((sum, s) => sum + s.Credits, 0) <
                     requiredCredits[tab.id]
                   }
-                />
+                /> */}
               </div>
             </TabsContent>
           ))}
